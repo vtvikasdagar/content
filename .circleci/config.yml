@@ -138,7 +138,9 @@ references:
     run:
       name: Create Content Artifacts
       when: always
-      command: demisto-sdk create-content-artifacts -a $CIRCLE_ARTIFACTS --cpus 8
+      command: |
+        demisto-sdk create-content-artifacts -a $CIRCLE_ARTIFACTS --cpus 8
+        cp ./Tests/id_set.json $CIRCLE_ARTIFACTS
 
   restore_cache: &restore_cache
     restore_cache:
