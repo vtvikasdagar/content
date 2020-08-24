@@ -86,9 +86,11 @@ def create_api_call():
         )
     try:
         client._make_request = lambda method, uri, body, headers: override_make_request(client, method, uri, body, headers)
+        demisto.results("#####################create_api_call")
 
     except Exception as e:
         demisto.error("Error making request - failed to create client: {}".format(e))
+        demisto.results("#####################create_api_call_exception")
         raise Exception
 
     return client
@@ -102,13 +104,17 @@ def set_proxy():
 
             if USE_PROXY:
                 admin_api.set_proxy(host=host, port=port)
+                demisto.results("#####################use_proxy")
 
     # if no proxy settings have been set
     except ValueError:
         admin_api.set_proxy(host=None, port=None, proxy_type=None)
+        demisto.results("#####################use_proxy_value_error")
 
     except Exception as e:
         demisto.error('Error setting proxy: {}'.format(e))
+        demisto.results("#####################use_proxy_exception")
+
         raise Exception
 
 
@@ -198,9 +204,11 @@ def test_instance():
                 raise Exception(e.__getattribute__('data')['message'])
 
         elif hasattr(e, 'strerror'):
+            demisto.results("#####################test_instance_exception111111")
             raise Exception(e.__getattribute__('strerror'))
 
         else:
+            demisto.results("#####################test_instance_exception222222")
             raise Exception('Unknown error: ' + str(e))
 
 
@@ -364,5 +372,6 @@ try:
 
 except Exception as e:
     demisto.error("Duo Admin failed on: {} on this command {}".format(e, demisto.command))
+    demisto.results("########## duo admin exception!!!!")
     return_error(e.message)
 sys.exit(0)
