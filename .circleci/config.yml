@@ -140,7 +140,6 @@ references:
       when: always
       command: |
         demisto-sdk create-content-artifacts -a $CIRCLE_ARTIFACTS --cpus 8
-        cp ./Tests/id_set.json $CIRCLE_ARTIFACTS
 
   restore_cache: &restore_cache
     restore_cache:
@@ -235,6 +234,7 @@ references:
       when: always
       command: |
         demisto-sdk create-id-set -o ./Tests/id_set.json
+        cp ./Tests/id_set.json $CIRCLE_ARTIFACTS
 
   build_content_descriptor: &build_content_descriptor
     run:
