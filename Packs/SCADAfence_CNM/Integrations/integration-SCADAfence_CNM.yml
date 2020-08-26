@@ -290,6 +290,7 @@ script:
             }
 
     def get_endpoint_data(data):
+
         ret = []
         for ep in data:
             if 'ipAddress' in demisto.args().keys():
